@@ -13,12 +13,26 @@ public class ParkingLot {
      * Purpose : parks vehicle if slot is free
      *
      * @param vehicle
-     * @return boolean vehicle can be parked or not
+     * @return boolean : vehicle can be parked or not
      */
     public boolean park(Object vehicle) {
         if (this.parkedVehicle != null)
             return false;
         this.parkedVehicle = vehicle;
         return true;
+    }
+
+    /**
+     * Purpose : Unpark vehicle
+     *
+     * @param vehicle
+     * @return boolean : vehicle can unpark or not
+     */
+    public boolean unpark(Object vehicle) {
+        if (parkedVehicle.equals(vehicle)) {
+            parkedVehicle = null;
+            return true;
+        }
+        return false;
     }
 }
