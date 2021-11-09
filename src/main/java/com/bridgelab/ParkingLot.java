@@ -28,10 +28,15 @@ public class ParkingLot {
      * @param vehicle
      * @return boolean : vehicle can unpark or not
      */
-    public boolean unpark(Object vehicle) {
-        if (parkedVehicle.equals(vehicle)) {
-            parkedVehicle = null;
-            return true;
+    public boolean unPark(Object vehicle) {
+
+        try {
+            if (parkedVehicle.equals(vehicle)) {
+                parkedVehicle = null;
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }

@@ -29,7 +29,22 @@ public class ParkingLotTest {
     void givenVehicle_whenUnpark_returnsTrue() {
         Object vehicle = new Object();
         service.park(vehicle);
-        boolean isUnparked = service.unpark(vehicle);
+        boolean isUnparked = service.unPark(vehicle);
         Assertions.assertTrue(isUnparked);
+    }
+
+    @Test
+    void givenVehicle_whenUnparkAnotherVehicle_returnsFalse() {
+        Object vehicle = new Object();
+        service.park(new Object());
+        boolean isUnParked = service.unPark(vehicle);
+        Assertions.assertFalse(isUnParked);
+    }
+
+    @Test
+    public void givenVehicle_whenUnParkingFromEmptySlot_shouldReturnFalse() {
+        Object vehicle = new Object();
+        boolean isUnParked = service.unPark(vehicle);
+        Assertions.assertFalse(isUnParked);
     }
 }
