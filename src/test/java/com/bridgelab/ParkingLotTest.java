@@ -69,4 +69,20 @@ public class ParkingLotTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void givenFullSlot_whenChecksForFull_shouldReturnTrue() throws ParkingLotException {
+        service.park(vehicle);
+        int currentSize = 100;
+        boolean isLotFull = service.isSlotFull(currentSize);
+        Assertions.assertTrue(isLotFull);
+    }
+
+    @Test
+    void givenSomeFreeSlot_whenChecksForFull_shouldReturnFalse() throws ParkingLotException {
+        service.park(vehicle);
+        int currentSize = 34;
+        boolean isLotFull = service.isSlotFull(currentSize);
+        Assertions.assertFalse(isLotFull);
+    }
 }

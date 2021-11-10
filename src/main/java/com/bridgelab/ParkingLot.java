@@ -1,5 +1,7 @@
 package com.bridgelab;
 
+import java.util.ArrayList;
+
 /**
  * Purpose : To check availability of slot for parking,
  * to park if slot is free,
@@ -10,6 +12,8 @@ package com.bridgelab;
  */
 public class ParkingLot {
     public Object parkedVehicle = null;
+    private int currentSize = 0;
+    private int parkingLotSize = 100;
 
     /**
      * Purpose : parks vehicle if slot is free
@@ -20,6 +24,7 @@ public class ParkingLot {
         if (this.parkedVehicle != null)
             throw new ParkingLotException("Parking Lot is FULL");
         this.parkedVehicle = vehicle;
+        currentSize++;
     }
 
     /**
@@ -31,6 +36,7 @@ public class ParkingLot {
         try {
             if (parkedVehicle.equals(vehicle))
                 parkedVehicle = null;
+                currentSize--;
         } catch (Exception e) {
             throw new ParkingLotException("Parking slot does not have given vehicle");
         }
@@ -43,8 +49,9 @@ public class ParkingLot {
      * @return vehicle parked or not
      */
     public boolean isVehicleParked(Object vehicle) {
-        if(this.parkedVehicle.equals(vehicle))
+        if(this.parkedVehicle.equals(vehicle)) {
             return true;
+        }
         return false;
     }
 
@@ -61,5 +68,11 @@ public class ParkingLot {
         }catch (NullPointerException e){
             return true;
         }
+    }
+
+    public boolean isSlotFull(int currentSize) {
+        if(currentSize >= parkingLotSize)
+            return true;
+        return false;
     }
 }
