@@ -1,7 +1,9 @@
 package com.bridgelab;
 
 /**
- * Purpose : To check availability o slot for parking
+ * Purpose : To check availability of slot for parking,
+ * to park if slot is free,
+ * to unpark from the slot.
  *
  * @author : ASIM AHAMMED
  * @since : 09-11-2021
@@ -13,31 +15,51 @@ public class ParkingLot {
      * Purpose : parks vehicle if slot is free
      *
      * @param vehicle
-     * @return boolean : vehicle can be parked or not
      */
-    public boolean park(Object vehicle) {
+    public void park(Object vehicle) throws ParkingLotException {
         if (this.parkedVehicle != null)
-            return false;
+            throw new ParkingLotException("Parking Lot is FULL");
         this.parkedVehicle = vehicle;
-        return true;
     }
 
     /**
-     * Purpose : Unpark vehicle
+     * Purpose : Unpark vehicle from slot
      *
      * @param vehicle
-     * @return boolean : vehicle can unpark or not
      */
-    public boolean unPark(Object vehicle) {
-
+    public void unPark(Object vehicle) throws ParkingLotException {
         try {
-            if (parkedVehicle.equals(vehicle)) {
+            if (parkedVehicle.equals(vehicle))
                 parkedVehicle = null;
-                return true;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new ParkingLotException("Parking slot does not have given vehicle");
         }
+    }
+
+    /**
+     * Purpose : Check vehicle is parked.
+     *
+     * @param vehicle
+     * @return vehicle parked or not
+     */
+    public boolean isVehicleParked(Object vehicle) {
+        if(this.parkedVehicle.equals(vehicle))
+            return true;
         return false;
+    }
+
+    /**
+     * Purpose : Check vehicle is Unparked.
+     *
+     * @return vehicle can unparked or not
+     */
+    public boolean isVehicleUnParked() throws Exception {
+        try{
+            if(this.parkedVehicle.equals(null))
+                return true;
+            return false;
+        }catch (NullPointerException e){
+            return true;
+        }
     }
 }
