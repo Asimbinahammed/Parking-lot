@@ -1,7 +1,5 @@
 package com.bridgelab;
 
-import java.util.ArrayList;
-
 /**
  * Purpose : To check availability of slot for parking,
  * to park if slot is free,
@@ -11,9 +9,16 @@ import java.util.ArrayList;
  * @since : 09-11-2021
  */
 public class ParkingLot {
+    private int currentCapacity;
+    private final int actualCapacity;
     public Object parkedVehicle = null;
-    private int currentSize = 0;
-    private int parkingLotSize = 100;
+    private ParkingLotOwner owner;
+
+
+    public ParkingLot(int capacity) {
+        this.currentCapacity = 0;
+        this.actualCapacity = capacity;
+    }
 
     /**
      * Purpose : parks vehicle if slot is free
@@ -24,7 +29,7 @@ public class ParkingLot {
         if (this.parkedVehicle != null)
             throw new ParkingLotException("Parking Lot is FULL");
         this.parkedVehicle = vehicle;
-        currentSize++;
+        currentCapacity++;
     }
 
     /**
@@ -36,7 +41,7 @@ public class ParkingLot {
         try {
             if (parkedVehicle.equals(vehicle))
                 parkedVehicle = null;
-                currentSize--;
+                currentCapacity--;
         } catch (Exception e) {
             throw new ParkingLotException("Parking slot does not have given vehicle");
         }
@@ -49,10 +54,7 @@ public class ParkingLot {
      * @return vehicle parked or not
      */
     public boolean isVehicleParked(Object vehicle) {
-        if(this.parkedVehicle.equals(vehicle)) {
-            return true;
-        }
-        return false;
+        return this.parkedVehicle.equals(vehicle);
     }
 
     /**
@@ -61,18 +63,22 @@ public class ParkingLot {
      * @return vehicle can unparked or not
      */
     public boolean isVehicleUnParked() throws Exception {
-        try{
-            if(this.parkedVehicle.equals(null))
-                return true;
-            return false;
-        }catch (NullPointerException e){
+        try {
+            return this.parkedVehicle.equals(null);
+        } catch (NullPointerException e) {
             return true;
         }
     }
 
-    public boolean isSlotFull(int currentSize) {
-        if(currentSize >= parkingLotSize)
+    public boolean isSlotFull() throws ParkingLotException {
+        if(this.currentCapacity >= actualCapacity) {
+            ParkingLotOwner.lotFull("Parking Lot is FULL");
             return true;
+        }
         return false;
+    }
+
+    public void setOwner(ParkingLotOwner owner) {
+        this.owner = owner;
     }
 }

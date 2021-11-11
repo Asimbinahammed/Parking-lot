@@ -7,19 +7,22 @@ import org.junit.jupiter.api.Test;
 public class ParkingLotTest {
     ParkingLot service;
     Object vehicle;
+    ParkingLotOwner owner;
+    public final int capacity = 1;
 
     @BeforeEach
     void setUp() {
-        service = new ParkingLot();
+        service = new ParkingLot(capacity);
+        owner = new ParkingLotOwner();
         vehicle = new Object();
     }
 
     @Test
     void givenVehicleAndSlotIsEmpty_whenParked_shouldReturnsTrue() {
         try {
-          service.park(vehicle);
-          boolean isParked = service.isVehicleParked(vehicle);
-          Assertions.assertTrue(isParked);
+            service.park(vehicle);
+            boolean isParked = service.isVehicleParked(vehicle);
+            Assertions.assertTrue(isParked);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
@@ -72,17 +75,21 @@ public class ParkingLotTest {
 
     @Test
     void givenFullSlot_whenChecksForFull_shouldReturnTrue() throws ParkingLotException {
-        service.park(vehicle);
-        int currentSize = 100;
-        boolean isLotFull = service.isSlotFull(currentSize);
-        Assertions.assertTrue(isLotFull);
+        try{
+            service.setOwner(owner);
+            service.park(vehicle);
+            service.isSlotFull();
+        }catch (ParkingLotException e){
+            Assertions.assertEquals("Parking Lot is FULL", e.getMessage());
+        }
     }
 
     @Test
     void givenSomeFreeSlot_whenChecksForFull_shouldReturnFalse() throws ParkingLotException {
+        service.setOwner(owner);
         service.park(vehicle);
-        int currentSize = 34;
-        boolean isLotFull = service.isSlotFull(currentSize);
+        service.unPark(vehicle);
+        boolean isLotFull = service.isSlotFull();
         Assertions.assertFalse(isLotFull);
     }
 }
