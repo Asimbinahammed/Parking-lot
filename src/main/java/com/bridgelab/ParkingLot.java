@@ -9,11 +9,10 @@ package com.bridgelab;
  * @since : 09-11-2021
  */
 public class ParkingLot {
-    private int currentCapacity;
     private final int actualCapacity;
     public Object parkedVehicle = null;
+    private int currentCapacity;
     private ParkingLotOwner owner;
-
 
     public ParkingLot(int capacity) {
         this.currentCapacity = 0;
@@ -41,7 +40,7 @@ public class ParkingLot {
         try {
             if (parkedVehicle.equals(vehicle))
                 parkedVehicle = null;
-                currentCapacity--;
+            currentCapacity--;
         } catch (Exception e) {
             throw new ParkingLotException("Parking slot does not have given vehicle");
         }
@@ -70,14 +69,25 @@ public class ParkingLot {
         }
     }
 
+    /**
+     * Purpose : Check whether parking lot is full or not
+     *
+     * @return true if parking lot if full or else false
+     * @throws ParkingLotException
+     */
     public boolean isSlotFull() throws ParkingLotException {
-        if(this.currentCapacity >= actualCapacity) {
+        if (this.currentCapacity >= actualCapacity) {
             ParkingLotOwner.lotFull("Parking Lot is FULL");
             return true;
         }
         return false;
     }
 
+    /**
+     * Purpose : Setting owner
+     *
+     * @param owner : parking lot owner
+     */
     public void setOwner(ParkingLotOwner owner) {
         this.owner = owner;
     }
