@@ -1,5 +1,8 @@
 package com.bridgelab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Purpose : To check availability of slot for parking,
  * to park if slot is free,
@@ -9,74 +12,13 @@ package com.bridgelab;
  * @since : 09-11-2021
  */
 public class ParkingLot {
-    private final int actualCapacity;
-    public Object parkedVehicle = null;
-    private int currentCapacity;
+    public List vehicles;
+    private int actualCapacity;
     private ParkingLotOwner owner;
-    private static ParkingLotSecurity parkingLotSecurity;
-
 
     public ParkingLot(int capacity) {
-        this.currentCapacity = 0;
+        this.vehicles = new ArrayList(capacity);
         this.actualCapacity = capacity;
-    }
-
-    /**
-     * Purpose : parks vehicle if slot is free
-     *
-     * @param vehicle
-     * @return
-     */
-    public boolean park(Object vehicle) throws ParkingLotException {
-        if (this.parkedVehicle != null) {
-            owner.capacityFull();
-            throw new ParkingLotException("Parking Lot is FULL");
-        }
-        this.parkedVehicle = vehicle;
-        currentCapacity++;
-        return false;
-    }
-
-    /**
-     * Purpose : Unpark vehicle from slot
-     *
-     * @param vehicle
-     */
-    public void unPark(Object vehicle) throws ParkingLotException {
-        try {
-            if (this.parkedVehicle.equals(vehicle)) {
-                parkedVehicle = null;
-                currentCapacity--;
-            }
-        } catch (Exception e) {
-           throw new ParkingLotException("Vehicle doesnt present here");      }
-    }
-
-    /**
-     * Purpose : Check vehicle is parked.
-     *
-     * @param vehicle
-     * @return vehicle parked or not
-     */
-    public boolean isVehicleParked(Object vehicle) {
-        if(this.parkedVehicle.equals(vehicle))
-            return true;
-        return false;
-    }
-
-    /**
-     * Purpose : Check vehicle is Unparked.
-     *
-     * @return vehicle can unparked or not
-     */
-    public boolean isVehicleUnParked() throws Exception {
-        try {
-            if(this.parkedVehicle.equals(null))
-                return true;
-            return false;
-        } catch (NullPointerException e) {
-            return true;
-        }
     }
 
     /**
@@ -88,8 +30,76 @@ public class ParkingLot {
         this.owner = owner;
     }
 
-    public void avilableLot() throws ParkingLotException {
-        if(actualCapacity >= currentCapacity)
-            throw new ParkingLotException(actualCapacity - currentCapacity +" available space remaining");
+    /**
+     * Purpose : setting new capacity for lot
+     *
+     * @param capacity
+     */
+    public void setCapacity(int capacity) {
+        this.actualCapacity = capacity;
     }
+
+    /**
+     * Purpose : parks vehicle if slot is free
+     *
+     * @param vehicle
+     * @return
+     */
+    public void park(Object vehicle) throws ParkingLotException {
+        if (this.vehicles.size() >= actualCapacity) {
+            owner.capacityFull();
+            throw new ParkingLotException("Parking Lot is FULL");
+        }
+        if(isVehicleParked(vehicle))
+            throw new ParkingLotException("Vehicle is already parked");
+        this.vehicles.add(vehicle);
+        isLotFull();
+    }
+
+    /**
+     * Purpose : To inform owner when lot i full
+     */
+    private void isLotFull() {
+        if (this.vehicles.size() >= actualCapacity)
+            owner.capacityFull();
+    }
+
+    /**
+     * Purpose : Unpark vehicle from slot
+     *
+     * @param vehicle
+     */
+    public void unPark(Object vehicle) throws ParkingLotException {
+        if(!this.vehicles.contains(vehicle))
+            throw new ParkingLotException("Vehicle doesn't present here");
+        this.vehicles.remove(vehicle);
+    }
+
+    /**
+     * Purpose : Check vehicle is parked.
+     *
+     * @param vehicle
+     * @return vehicle parked or not
+     */
+    public boolean isVehicleParked(Object vehicle) {
+        if(this.vehicles.contains(vehicle))
+            return true;
+        return false;
+    }
+
+    /**
+     * Purpose : Check vehicle is Unparked.
+     *
+     * @return vehicle can unparked or not
+     */
+    public boolean isVehicleUnParked(Object vehicle) throws Exception {
+        try {
+            if(!this.vehicles.contains(vehicle))
+                return true;
+        } catch (NullPointerException e) {
+            throw new ParkingLotException("No given vehicle is present");
+        }
+        return false;
+    }
+
 }
