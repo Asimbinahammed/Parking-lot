@@ -6,7 +6,7 @@ package com.bridgelab;
  * @author : ASIM AHAMMED
  * @since : 09-11-2021
  */
-public class ParkingLotOwner {
+public class ParkingLotOwner implements ParkingLotObserver{
 
     private boolean capacityFull;
 

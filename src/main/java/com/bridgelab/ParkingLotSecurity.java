@@ -1,21 +1,29 @@
 package com.bridgelab;
 
+
 /**
- * Purpose : Informing whether parking lot is full
+ * Purpose : Informing security when parking lot if full
  *
  * @author : ASIM AHAMMED
  * @since : 09-11-2021
  */
-public class ParkingLotSecurity {
+public class ParkingLotSecurity implements ParkingLotObserver {
+
+    private boolean capacityFull;
 
     /**
-     * Purpose : informing security when lot is full
-     * redirecting into new parking lot
+     * Purpose : To inform security lot is full
      */
-    public void informSecurity(){
-        redirectIntoNewLot();
+    public void capacityFull() {
+        capacityFull = true;
     }
 
-    private void redirectIntoNewLot() {
+    /**
+     * Purpose : To check whether lot is full or not
+     *
+     * @return true if lot is full
+     */
+    public boolean isSlotFull() {
+        return this.capacityFull;
     }
 }

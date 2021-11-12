@@ -14,9 +14,10 @@ import java.util.List;
 public class ParkingLot {
     public List vehicles;
     private int actualCapacity;
-    private ParkingLotOwner owner;
+    private List<ParkingLotObserver> observers;
 
     public ParkingLot(int capacity) {
+        this.observers = new ArrayList<>();
         this.vehicles = new ArrayList(capacity);
         this.actualCapacity = capacity;
     }
@@ -24,10 +25,10 @@ public class ParkingLot {
     /**
      * Purpose : Setting owner
      *
-     * @param owner : parking lot owner
+     * @param observer : parking lot observer
      */
-    public void setOwner(ParkingLotOwner owner) {
-        this.owner = owner;
+    public void setParkingLotObserver(ParkingLotObserver observer) {
+        this.observers.add(observer);
     }
 
     /**
@@ -47,7 +48,9 @@ public class ParkingLot {
      */
     public void park(Object vehicle) throws ParkingLotException {
         if (this.vehicles.size() >= actualCapacity) {
-            owner.capacityFull();
+            for (ParkingLotObserver observer : observers) {
+                observer.capacityFull();
+            }
             throw new ParkingLotException("Parking Lot is FULL");
         }
         if(isVehicleParked(vehicle))
@@ -60,8 +63,11 @@ public class ParkingLot {
      * Purpose : To inform owner when lot i full
      */
     private void isLotFull() {
-        if (this.vehicles.size() >= actualCapacity)
-            owner.capacityFull();
+        if (this.vehicles.size() >= actualCapacity) {
+            for (ParkingLotObserver observer : observers) {
+                observer.capacityFull();
+            }
+        }
     }
 
     /**
