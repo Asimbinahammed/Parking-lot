@@ -9,13 +9,10 @@ package com.bridgelab;
 public class ParkingLotSecurity {
 
     /**
-     * Purpose : informing security
+     * Purpose : informing security when lot is full
      * redirecting into new parking lot
-     *
-     * @param message : exception message
-     * @throws ParkingLotException
      */
-    public void informSecurity(String message) throws ParkingLotException {
+    public void informSecurity(){
         redirectIntoNewLot();
     }
 
