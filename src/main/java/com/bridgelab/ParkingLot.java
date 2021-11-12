@@ -78,6 +78,9 @@ public class ParkingLot {
     public void unPark(Object vehicle) throws ParkingLotException {
         if(!this.vehicles.contains(vehicle))
             throw new ParkingLotException("Vehicle doesn't present here");
+        for (ParkingLotObserver observer : observers) {
+            observer.capacityAvailabile();
+        }
         this.vehicles.remove(vehicle);
     }
 

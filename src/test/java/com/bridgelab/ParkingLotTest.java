@@ -99,4 +99,18 @@ public class ParkingLotTest {
         boolean isFull = security.isSlotFull();
         Assertions.assertTrue(isFull);
     }
+
+    @Test
+    void givenLotIsFull_whenUnparksVehicleInformObserver_shouldReturnTrue() throws ParkingLotException {
+        Object vehicle2 = new Object();
+        service.setParkingLotObserver(owner);
+        service.setCapacity(2);
+        service.park(vehicle);
+        service.park(vehicle2);
+        boolean isFull = owner.isSlotFull();
+        Assertions.assertTrue(isFull);
+        service.unPark(vehicle);
+        boolean isAvailable = owner.isSlotFull();
+        Assertions.assertFalse(isAvailable);
+    }
 }

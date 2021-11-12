@@ -10,11 +10,18 @@ public class ParkingLotOwner implements ParkingLotObserver{
 
     private boolean capacityFull;
 
+
     /**
-     * Purpose : To inform owner lot is full
+     * Purpose : To inform lot is full
      */
+    @Override
     public void capacityFull() {
         capacityFull = true;
+    }
+
+    @Override
+    public void capacityAvailabile() {
+        capacityFull = false;
     }
 
     /**
