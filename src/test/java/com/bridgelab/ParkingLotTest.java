@@ -5,18 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ParkingLotTest {
-    public final int capacity = 3;
     ParkingLot service;
     Object vehicle;
     ParkingLotOwner owner;
-    ParkingLotSecurity security;
 
     @BeforeEach
     void setUp() {
-        service = new ParkingLot(capacity);
+        service = new ParkingLot();
         owner = new ParkingLotOwner();
         service.setParkingLotObserver(owner);
         vehicle = new Object();
+        service.setCapacity(3);
     }
 
     @Test
@@ -101,7 +100,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenLotIsFull_whenUnparksVehicleInformObserver_shouldReturnTrue() throws ParkingLotException {
+    void givenLotIsFull_whenUnParksVehicleInformObserver_shouldReturnTrue() throws ParkingLotException {
         Object vehicle2 = new Object();
         service.setParkingLotObserver(owner);
         service.setCapacity(2);
@@ -112,5 +111,13 @@ public class ParkingLotTest {
         service.unPark(vehicle);
         boolean isAvailable = owner.isSlotFull();
         Assertions.assertFalse(isAvailable);
+    }
+
+    @Test
+    void givenVehicle_whenParkingUsingAttendant_shouldReturnTrue() throws ParkingLotException {
+        ParkingLotAttendant parkingLotAttendant = new ParkingLotAttendant();
+        parkingLotAttendant.parkVehicle(vehicle);
+        boolean isParked = service.isVehicleParked(vehicle);
+        Assertions.assertTrue(isParked);
     }
 }

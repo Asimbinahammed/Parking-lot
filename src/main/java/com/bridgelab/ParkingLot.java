@@ -12,14 +12,13 @@ import java.util.List;
  * @since : 09-11-2021
  */
 public class ParkingLot {
-    public List vehicles;
-    private int actualCapacity;
-    private List<ParkingLotObserver> observers;
+    public static List<Object> vehicles;
+    private static int actualCapacity;
+    private static List<ParkingLotObserver> observers;
 
-    public ParkingLot(int capacity) {
+    public ParkingLot() {
         this.observers = new ArrayList<>();
-        this.vehicles = new ArrayList(capacity);
-        this.actualCapacity = capacity;
+        this.vehicles = new ArrayList<>();
     }
 
     /**
@@ -34,17 +33,16 @@ public class ParkingLot {
     /**
      * Purpose : setting new capacity for lot
      *
-     * @param capacity
+     * @param capacity : maximum limit of parking lot
      */
     public void setCapacity(int capacity) {
-        this.actualCapacity = capacity;
+        actualCapacity = capacity;
     }
 
     /**
      * Purpose : parks vehicle if slot is free
      *
      * @param vehicle
-     * @return
      */
     public void park(Object vehicle) throws ParkingLotException {
         if (this.vehicles.size() >= actualCapacity) {
@@ -60,7 +58,7 @@ public class ParkingLot {
     }
 
     /**
-     * Purpose : To inform owner when lot i full
+     * Purpose : To inform owner when lot is full
      */
     private void isLotFull() {
         if (this.vehicles.size() >= actualCapacity) {
@@ -78,10 +76,10 @@ public class ParkingLot {
     public void unPark(Object vehicle) throws ParkingLotException {
         if(!this.vehicles.contains(vehicle))
             throw new ParkingLotException("Vehicle doesn't present here");
+        this.vehicles.remove(vehicle);
         for (ParkingLotObserver observer : observers) {
             observer.capacityAvailabile();
         }
-        this.vehicles.remove(vehicle);
     }
 
     /**
@@ -91,9 +89,7 @@ public class ParkingLot {
      * @return vehicle parked or not
      */
     public boolean isVehicleParked(Object vehicle) {
-        if(this.vehicles.contains(vehicle))
-            return true;
-        return false;
+        return this.vehicles.contains(vehicle);
     }
 
     /**
