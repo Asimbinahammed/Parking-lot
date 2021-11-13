@@ -54,6 +54,7 @@ public class ParkingLot {
         if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle is already parked");
         vehicles.add(vehicle);
+        ParkingLotOwner.parkedTime(vehicle);
         isLotFull();
     }
 

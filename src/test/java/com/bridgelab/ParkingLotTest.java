@@ -109,8 +109,8 @@ public class ParkingLotTest {
         boolean isFull = owner.isSlotFull();
         Assertions.assertTrue(isFull);
         service.unPark(vehicle);
-        boolean isAvailable = owner.isSlotFull();
-        Assertions.assertFalse(isAvailable);
+        boolean isStillFull = owner.isSlotFull();
+        Assertions.assertFalse(isStillFull);
     }
 
     @Test
@@ -127,5 +127,11 @@ public class ParkingLotTest {
         int indexOfVehicle = service.findVehicle(vehicle);
         Object vehicleAtIndex = service.findSpot(indexOfVehicle);
         Assertions.assertEquals(vehicle, vehicleAtIndex);
+    }
+
+    @Test
+    void givenVehicleAndTimeOfPark_whenOwnerLookingForTime_shouldReturnTrue() throws ParkingLotException {
+        service.park(vehicle);
+        Assertions.assertTrue(service.isVehicleParked(vehicle));
     }
 }
