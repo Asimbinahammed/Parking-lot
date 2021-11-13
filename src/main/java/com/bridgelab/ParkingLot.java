@@ -17,8 +17,8 @@ public class ParkingLot {
     private static List<ParkingLotObserver> observers;
 
     public ParkingLot() {
-        this.observers = new ArrayList<>();
-        this.vehicles = new ArrayList<>();
+        observers = new ArrayList<>();
+        vehicles = new ArrayList<>();
     }
 
     /**
@@ -27,7 +27,7 @@ public class ParkingLot {
      * @param observer : parking lot observer
      */
     public void setParkingLotObserver(ParkingLotObserver observer) {
-        this.observers.add(observer);
+        observers.add(observer);
     }
 
     /**
@@ -45,23 +45,23 @@ public class ParkingLot {
      * @param vehicle
      */
     public void park(Object vehicle) throws ParkingLotException {
-        if (this.vehicles.size() >= actualCapacity) {
+        if (vehicles.size() >= actualCapacity) {
             for (ParkingLotObserver observer : observers) {
                 observer.capacityFull();
             }
             throw new ParkingLotException("Parking Lot is FULL");
         }
-        if(isVehicleParked(vehicle))
+        if (isVehicleParked(vehicle))
             throw new ParkingLotException("Vehicle is already parked");
-        this.vehicles.add(vehicle);
+        vehicles.add(vehicle);
         isLotFull();
     }
 
     /**
-     * Purpose : To inform owner when lot is full
+     * Purpose : To inform observer when lot is full
      */
     private void isLotFull() {
-        if (this.vehicles.size() >= actualCapacity) {
+        if (vehicles.size() >= actualCapacity) {
             for (ParkingLotObserver observer : observers) {
                 observer.capacityFull();
             }
@@ -74,9 +74,9 @@ public class ParkingLot {
      * @param vehicle
      */
     public void unPark(Object vehicle) throws ParkingLotException {
-        if(!this.vehicles.contains(vehicle))
+        if (!vehicles.contains(vehicle))
             throw new ParkingLotException("Vehicle doesn't present here");
-        this.vehicles.remove(vehicle);
+        vehicles.remove(vehicle);
         for (ParkingLotObserver observer : observers) {
             observer.capacityAvailabile();
         }
@@ -89,7 +89,7 @@ public class ParkingLot {
      * @return vehicle parked or not
      */
     public boolean isVehicleParked(Object vehicle) {
-        return this.vehicles.contains(vehicle);
+        return vehicles.contains(vehicle);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ParkingLot {
      */
     public boolean isVehicleUnParked(Object vehicle) throws Exception {
         try {
-            if(!this.vehicles.contains(vehicle))
+            if (!vehicles.contains(vehicle))
                 return true;
         } catch (NullPointerException e) {
             throw new ParkingLotException("No given vehicle is present");
@@ -107,4 +107,26 @@ public class ParkingLot {
         return false;
     }
 
+    /**
+     * Purpose : To find spot of vehicle if vehicle is present in parking lot.
+     *
+     * @param vehicle
+     * @return index of vehicle
+     * @throws ParkingLotException
+     */
+    public int findVehicle(Object vehicle) throws ParkingLotException {
+        if (vehicles.contains(vehicle))
+            return vehicles.indexOf(vehicle);
+        throw new ParkingLotException("Vehicle is not present in lot");
+    }
+
+    /**
+     * Purpose : To fnd vehicle at the given spot.
+     *
+     * @param vehicleFind : intger value represent spot of parking lot.
+     * @return vehicle
+     */
+    public Object findSpot(int vehicleFind) {
+        return vehicles.get(vehicleFind);
+    }
 }

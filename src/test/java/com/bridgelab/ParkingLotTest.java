@@ -120,4 +120,12 @@ public class ParkingLotTest {
         boolean isParked = service.isVehicleParked(vehicle);
         Assertions.assertTrue(isParked);
     }
+
+    @Test
+    void givenDriver_whenFindingVehicleFromLot_shouldReturnTrue() throws ParkingLotException {
+        service.park(vehicle);
+        int indexOfVehicle = service.findVehicle(vehicle);
+        Object vehicleAtIndex = service.findSpot(indexOfVehicle);
+        Assertions.assertEquals(vehicle, vehicleAtIndex);
+    }
 }
