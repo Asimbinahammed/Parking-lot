@@ -43,6 +43,7 @@ public class ParkingLot {
      * Purpose : parks vehicle if slot is free
      *
      * @param vehicle
+     * @throws ParkingLotException : parking lot is full or vehicle is not present.
      */
     public void park(Object vehicle) throws ParkingLotException {
         if (vehicles.size() >= actualCapacity) {
@@ -73,6 +74,7 @@ public class ParkingLot {
      * Purpose : Unpark vehicle from slot
      *
      * @param vehicle
+     * @throws ParkingLotException :vehicle is not present
      */
     public void unPark(Object vehicle) throws ParkingLotException {
         if (!vehicles.contains(vehicle))
@@ -96,15 +98,12 @@ public class ParkingLot {
     /**
      * Purpose : Check vehicle is Unparked.
      *
-     * @return vehicle can unparked or not
+     * @param vehicle
+     * @return vehicle was unparked or not
      */
-    public boolean isVehicleUnParked(Object vehicle) throws Exception {
-        try {
+    public boolean isVehicleUnParked(Object vehicle){
             if (!vehicles.contains(vehicle))
                 return true;
-        } catch (NullPointerException e) {
-            throw new ParkingLotException("No given vehicle is present");
-        }
         return false;
     }
 
@@ -113,12 +112,14 @@ public class ParkingLot {
      *
      * @param vehicle
      * @return index of vehicle
-     * @throws ParkingLotException
+     * @throws ParkingLotException :vehicle is not present
      */
     public int findVehicle(Object vehicle) throws ParkingLotException {
-        if (vehicles.contains(vehicle))
+        if (vehicles.contains(vehicle)) {
+            ParkingLotDriver.spottedAt(vehicles.indexOf(vehicle));
             return vehicles.indexOf(vehicle);
-        throw new ParkingLotException("Vehicle is not present in lot");
+        }
+        throw new ParkingLotException("Vehicle is not present in parking lot");
     }
 
     /**
