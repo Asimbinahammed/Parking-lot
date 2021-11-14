@@ -12,6 +12,7 @@ public class ParkingLotAttendant {
 
     /**
      * Purpose : Calling park method from parking lot for park vehicle
+     *
      * @param vehicle
      * @throws ParkingLotException
      */

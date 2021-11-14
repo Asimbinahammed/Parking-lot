@@ -22,7 +22,7 @@ public class ParkingLot {
     }
 
     /**
-     * Purpose : Setting owner
+     * Purpose : Setting observer
      *
      * @param observer : parking lot observer
      */
@@ -43,7 +43,7 @@ public class ParkingLot {
      * Purpose : parks vehicle if slot is free
      *
      * @param vehicle
-     * @throws ParkingLotException : parking lot is full or vehicle is not present.
+     * @throws ParkingLotException : When parking lot is full or when vehicle is not present.
      */
     public void park(Object vehicle) throws ParkingLotException {
         if (vehicles.size() >= actualCapacity) {
@@ -74,14 +74,15 @@ public class ParkingLot {
      * Purpose : Unpark vehicle from slot
      *
      * @param vehicle
-     * @throws ParkingLotException :vehicle is not present
+     * @throws ParkingLotException : When vehicle is not present
      */
     public void unPark(Object vehicle) throws ParkingLotException {
         if (!vehicles.contains(vehicle))
             throw new ParkingLotException("Vehicle doesn't present here");
         vehicles.remove(vehicle);
+        ParkingLotOwner.removeFromList(vehicle);
         for (ParkingLotObserver observer : observers) {
-            observer.capacityAvailabile();
+            observer.capacityAvailable();
         }
     }
 
@@ -101,18 +102,16 @@ public class ParkingLot {
      * @param vehicle
      * @return vehicle was unparked or not
      */
-    public boolean isVehicleUnParked(Object vehicle){
-            if (!vehicles.contains(vehicle))
-                return true;
-        return false;
+    public boolean isVehicleUnParked(Object vehicle) {
+        return !vehicles.contains(vehicle);
     }
 
     /**
      * Purpose : To find spot of vehicle if vehicle is present in parking lot.
      *
      * @param vehicle
-     * @return index of vehicle
-     * @throws ParkingLotException :vehicle is not present
+     * @return spot number of vehicle
+     * @throws ParkingLotException : When vehicle is not present
      */
     public int findVehicle(Object vehicle) throws ParkingLotException {
         if (vehicles.contains(vehicle)) {
@@ -125,7 +124,7 @@ public class ParkingLot {
     /**
      * Purpose : To fnd vehicle at the given spot.
      *
-     * @param vehicleFind : intger value represent spot of parking lot.
+     * @param vehicleFind : integer value represent spot of parking lot.
      * @return vehicle
      */
     public Object findSpot(int vehicleFind) {

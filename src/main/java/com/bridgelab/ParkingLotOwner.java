@@ -1,20 +1,19 @@
 package com.bridgelab;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
- * Purpose : Informing owner when parking lot if full or not.Informing about the time of at which vehicle is parked
+ * Purpose : Informing owner when parking lot if full or not.
+ * Informing about the time of at which vehicle is parked.
  *
  * @author : ASIM AHAMMED
  * @since : 09-11-2021
  */
 public class ParkingLotOwner implements ParkingLotObserver {
 
+    static HashMap<Object, LocalDateTime> timer = new HashMap<>();
     private boolean capacityFull;
-    static HashMap<Object, LocalDateTime> timer= new HashMap<Object, LocalDateTime>();
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd--HH:mm:ss");
 
     /**
      * Purpose : Storing time of vehicle into a hashmap when its park.
@@ -27,15 +26,27 @@ public class ParkingLotOwner implements ParkingLotObserver {
     }
 
     /**
-     * Purpose : To inform lot is full
+     * Purpose : Removing vehicle from the list when it unparks.
+     *
+     * @param vehicle
+     */
+    public static void removeFromList(Object vehicle) {
+        timer.remove(vehicle);
+    }
+
+    /**
+     * Purpose : This method is created to set the status of full capacity of parking lot
      */
     @Override
     public void capacityFull() {
         capacityFull = true;
     }
 
+    /**
+     * Purpose : This method is created to set the status of parking capacity available in the parking lot
+     */
     @Override
-    public void capacityAvailabile() {
+    public void capacityAvailable() {
         capacityFull = false;
     }
 

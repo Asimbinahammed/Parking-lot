@@ -1,7 +1,5 @@
 package com.bridgelab;
 
-import java.util.List;
-
 /**
  * Purpose : To Inform spot of his vehicle to drivers.
  *
@@ -12,9 +10,9 @@ public class ParkingLotDriver {
 
     /**
      * Purpose : To store slot number.
-     * @param slotNUmber
+     * @param slotNumber : vehicle's slot number
      */
-    public static void spottedAt(int slotNUmber) {
-        int slotNumber = slotNUmber;
+    public static void spottedAt(int slotNumber) {
+        slotNumber = slotNumber;
     }
 }

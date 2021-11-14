@@ -42,7 +42,7 @@ public class ParkingLotTest {
 
 
     @Test
-    public void givenVehicle_whenUnParkingFromEmptySlot_shouldReturnException(){
+    public void givenVehicle_whenUnParkingFromEmptySlot_shouldReturnException() {
         Assertions.assertThrows(ParkingLotException.class, () -> service.unPark(vehicle));
     }
 
@@ -84,7 +84,7 @@ public class ParkingLotTest {
         service.park(vehicle2);
         boolean check1 = service.isVehicleParked(vehicle);
         boolean check2 = service.isVehicleParked(vehicle2);
-        Assertions.assertTrue(check1 && check2 );
+        Assertions.assertTrue(check1 && check2);
     }
 
     @Test
@@ -134,4 +134,5 @@ public class ParkingLotTest {
         service.park(vehicle);
         Assertions.assertTrue(service.isVehicleParked(vehicle));
     }
+
 }
