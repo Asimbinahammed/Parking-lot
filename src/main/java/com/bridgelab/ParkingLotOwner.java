@@ -2,6 +2,7 @@ package com.bridgelab;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 /**
  * Purpose : Informing owner when parking lot if full or not.Informing about the time of at which vehicle is parked
@@ -11,17 +12,18 @@ import java.time.format.DateTimeFormatter;
  */
 public class ParkingLotOwner implements ParkingLotObserver {
 
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd--HH:mm:ss");
     private boolean capacityFull;
+    static HashMap<Object, LocalDateTime> timer= new HashMap<Object, LocalDateTime>();
+    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd--HH:mm:ss");
 
     /**
-     * Purpose : Getting time of vehicle when its park.
+     * Purpose : Storing time of vehicle into a hashmap when its park.
      *
      * @param vehicle
      */
     static void parkedTime(Object vehicle) {
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
+        timer.put(vehicle, now);
     }
 
     /**
