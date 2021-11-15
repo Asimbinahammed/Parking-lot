@@ -7,12 +7,12 @@ package com.bridgelab;
  *  @since : 09-11-2021
  */
 public class ParkingLotDriver {
-
+    
     /**
      * Purpose : To store slot number.
      * @param slotNumber : vehicle's slot number
      */
     public static void spottedAt(int slotNumber) {
-        slotNumber = slotNumber;
+       int spotNO = slotNumber;
     }
 }

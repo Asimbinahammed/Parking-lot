@@ -8,7 +8,7 @@ package com.bridgelab;
  */
 
 public class ParkingLotAttendant {
-    ParkingLot service = new ParkingLot();
+    ParkingLot parkingLot = new ParkingLot();
 
     /**
      * Purpose : Calling park method from parking lot for park vehicle
@@ -17,6 +17,6 @@ public class ParkingLotAttendant {
      * @throws ParkingLotException
      */
     public void parkVehicle(Object vehicle) throws ParkingLotException {
-        service.park(vehicle);
+        parkingLot.park(vehicle);
     }
 }

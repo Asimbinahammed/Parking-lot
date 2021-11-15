@@ -46,14 +46,11 @@ public class ParkingLot {
      * @throws ParkingLotException : When parking lot is full or when vehicle is not present.
      */
     public void park(Object vehicle) throws ParkingLotException {
-        if (vehicles.size() >= actualCapacity) {
-            for (ParkingLotObserver observer : observers) {
-                observer.capacityFull();
-            }
-            throw new ParkingLotException("Parking Lot is FULL");
+        if (vehicles.size() == actualCapacity) {
+            throw new ParkingLotException(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, "Parking Lot is FULL");
         }
         if (isVehicleParked(vehicle))
-            throw new ParkingLotException("Vehicle is already parked");
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED, "Vehicle is already parked");
         vehicles.add(vehicle);
         ParkingLotOwner.parkedTime(vehicle);
         isLotFull();
@@ -63,7 +60,7 @@ public class ParkingLot {
      * Purpose : To inform observer when lot is full
      */
     private void isLotFull() {
-        if (vehicles.size() >= actualCapacity) {
+        if (vehicles.size() == actualCapacity) {
             for (ParkingLotObserver observer : observers) {
                 observer.capacityFull();
             }
@@ -78,7 +75,7 @@ public class ParkingLot {
      */
     public void unPark(Object vehicle) throws ParkingLotException {
         if (!vehicles.contains(vehicle))
-            throw new ParkingLotException("Vehicle doesn't present here");
+            throw new ParkingLotException(ParkingLotException.ExceptionType.NO_SUCH_VEHICLE, "Vehicle doesn't present here");
         vehicles.remove(vehicle);
         ParkingLotOwner.removeFromList(vehicle);
         for (ParkingLotObserver observer : observers) {
@@ -115,10 +112,11 @@ public class ParkingLot {
      */
     public int findVehicle(Object vehicle) throws ParkingLotException {
         if (vehicles.contains(vehicle)) {
-            ParkingLotDriver.spottedAt(vehicles.indexOf(vehicle));
-            return vehicles.indexOf(vehicle);
+            int spotNum = vehicles.indexOf(vehicle);
+            ParkingLotDriver.spottedAt(spotNum);
+            return spotNum;
         }
-        throw new ParkingLotException("Vehicle is not present in parking lot");
+        throw new ParkingLotException(ParkingLotException.ExceptionType.NO_SUCH_VEHICLE, "Vehicle is not present in parking lot");
     }
 
     /**
