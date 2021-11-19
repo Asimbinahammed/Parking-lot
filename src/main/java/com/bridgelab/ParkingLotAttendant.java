@@ -8,15 +8,15 @@ package com.bridgelab;
  */
 
 public class ParkingLotAttendant {
-    ParkingLot parkingLot = new ParkingLot();
+    ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
 
     /**
      * Purpose : Calling park method from parking lot for park vehicle
      *
-     * @param vehicle
-     * @throws ParkingLotException
+     * @param vehicle : to park vehicle.
+     * @throws ParkingLotException : if parking lot is full or vehicle already parked
      */
     public void parkVehicle(Object vehicle) throws ParkingLotException {
-        parkingLot.park(vehicle);
+        parkingLotSystem.park(vehicle);
     }
 }
