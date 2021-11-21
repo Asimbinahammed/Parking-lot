@@ -22,7 +22,7 @@ public class ParkingLotOwner implements ParkingLotObserver {
      *
      * @param vehicle
      */
-    static void parkedTime(Object vehicle) {
+    static void parkedTime(Vehicle vehicle) {
         LocalDateTime now = LocalDateTime.now();
         parkingTime.put(vehicle, now.format(formatter));
     }
@@ -71,4 +71,3 @@ public class ParkingLotOwner implements ParkingLotObserver {
         return this.capacityFull;
     }
 }
-
