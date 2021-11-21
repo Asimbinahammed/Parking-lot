@@ -15,7 +15,7 @@ public class ParkingLotSecurity implements ParkingLotObserver {
      * Purpose : This method is created to set the status of full capacity of parking lot
      */
     @Override
-    public void capacityFull() {
+    public void capacityIsFull() {
         capacityFull = true;
     }
 
@@ -23,7 +23,7 @@ public class ParkingLotSecurity implements ParkingLotObserver {
      * Purpose : This method is created to set the status of parking capacity available in the parking lot
      */
     @Override
-    public void capacityAvailable() {
+    public void capacityIsAvailable() {
         capacityFull = false;
     }
 
