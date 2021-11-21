@@ -15,7 +15,6 @@ public class Vehicle {
     private final Size size;
     private final String ownerName;
 
-    public enum Size {LARGE, SMALL, MEDIUM}
     public Vehicle(String ownerName, Size size, String vehicle, String numberPlate, String color) {
         this.ownerName = ownerName;
         this.size = size;
@@ -51,5 +50,7 @@ public class Vehicle {
         Vehicle vehicle1 = (Vehicle) o;
         return Objects.equals(vehicle, vehicle1.vehicle) && Objects.equals(numberPlate, vehicle1.numberPlate) && Objects.equals(color, vehicle1.color) && size == vehicle1.size && Objects.equals(ownerName, vehicle1.ownerName);
     }
+
+    public enum Size {LARGE, SMALL, MEDIUM}
 
 }
