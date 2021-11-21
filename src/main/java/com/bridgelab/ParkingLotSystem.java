@@ -19,7 +19,6 @@ public class ParkingLotSystem {
     private static List<ParkingLotObserver> observers;
     private Vehicle Vehicle;
 
-
     public ParkingLotSystem() {
         observers = new ArrayList<>();
         vehicles = new ArrayList<>();
@@ -150,7 +149,7 @@ public class ParkingLotSystem {
      * @return spot number of vehicle
      * @throws ParkingLotException : When vehicle is not present
      */
-    public int findVehicle(Vehicle vehicle) throws ParkingLotException {
+    public static int findVehicle(Vehicle vehicle) throws ParkingLotException {
         for (Vehicle slot : parkingLot1) {
             if (slot.equals(vehicle))
                 return parkingLot1.indexOf(slot) + 1;

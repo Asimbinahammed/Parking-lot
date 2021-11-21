@@ -14,6 +14,7 @@ public class Vehicle {
     private final String color;
     private final Size size;
     private final String ownerName;
+    public Vehicle vehicles;
 
     public Vehicle(String ownerName, Size size, String vehicle, String numberPlate, String color) {
         this.ownerName = ownerName;

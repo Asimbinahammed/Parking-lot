@@ -183,11 +183,23 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    void givenHandicapped_whenParks_shouldReturnInNearestSpot() throws ParkingLotException {
+    void givenVehicle_whenParks_shouldReturnSpot() throws ParkingLotException {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle);
         int spotNumber = parkingLot.GetPositionByColor(vehicle, "white");
         Assertions.assertEquals(0, spotNumber);
     }
+
+    @Test
+    void givenWhiteVehicle_whenParks_shouldBeListedInPolice() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
+                "white");
+        parkingLot.park(vehicle);
+        int spotNumber = parkingLot.GetPositionByColor(vehicle, "white");
+        boolean checkForWhiteCarsSpot = Police.whiteCarsContains(spotNumber);
+        Assertions.assertTrue(checkForWhiteCarsSpot);
+    }
+
+
 }
