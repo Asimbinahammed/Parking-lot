@@ -2,7 +2,9 @@ package com.bridgelab;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Purpose : Informing owner when parking lot if full or not.
@@ -14,6 +16,8 @@ import java.util.HashMap;
 public class ParkingLotOwner implements ParkingLotObserver {
 
     static HashMap<Object, String> parkingTime = new HashMap<>();
+    static ArrayList vehicleParkedInLast30Min = new ArrayList();
+    static HashMap<Object, String> parkiedVehicleForLast30min = new HashMap<Object, String>();
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private boolean capacityFull;
 
@@ -22,9 +26,21 @@ public class ParkingLotOwner implements ParkingLotObserver {
      *
      * @param vehicle
      */
-    static void parkedTime(Vehicle vehicle) {
+    static void parkedTime(Object vehicle) {
         LocalDateTime now = LocalDateTime.now();
         parkingTime.put(vehicle, now.format(formatter));
+        parkedVehicleForLast30min(vehicle);
+    }
+
+    static void parkedVehicleForLast30min(Object vehicle){
+        LocalDateTime parkedVehicle30minBefore = LocalDateTime.now().plusMinutes(-30);
+        parkiedVehicleForLast30min.put(vehicle, parkedVehicle30minBefore.format(formatter));
+        Set<Object> setOfKeys = parkingTime.keySet();
+        for (Object key : setOfKeys) {
+            if(parkiedVehicleForLast30min.containsKey(key)){
+                vehicleParkedInLast30Min.add(key);
+            }
+        }
     }
 
     /**

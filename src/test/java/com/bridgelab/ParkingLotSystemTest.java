@@ -187,7 +187,7 @@ public class ParkingLotSystemTest {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle);
-        int spotNumber = parkingLot.GetPositionByColor(vehicle, "white");
+        int spotNumber = parkingLot.getPositionByColor(vehicle, "white");
         Assertions.assertEquals(0, spotNumber);
     }
 
@@ -196,10 +196,37 @@ public class ParkingLotSystemTest {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle);
-        int spotNumber = parkingLot.GetPositionByColor(vehicle, "white");
+        int spotNumber = parkingLot.getPositionByColor(vehicle, "white");
         boolean checkForWhiteCarsSpot = Police.whiteCarsContains(spotNumber);
         Assertions.assertTrue(checkForWhiteCarsSpot);
     }
 
+    @Test
+    void givenBlueToyotaVehicle_whenParks_shouldBeListedInPolice() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"Toyota", "KL 10 LM10",
+                "blue");
+        parkingLot.park(vehicle);
+        boolean checks = Police.checkBlueToyota(vehicle);
+        Assertions.assertTrue(checks);
+    }
+
+    @Test
+    void givenBMW_whenParks_shouldBeListedInPolice() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL 10 LM10",
+                "white");
+        parkingLot.park(vehicle);
+        int spotNumber = parkingLot.findVehicle(vehicle);
+        boolean checkForBMWCarsSpot = Police.listOfBMWContains(spotNumber);
+        Assertions.assertTrue(checkForBMWCarsSpot);
+    }
+
+    @Test
+    void givenVehicle_whenParks_shouldValidatedForNumberPLate() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white");
+        parkingLot.park(vehicle);
+        boolean checkValidity = Police.validateVehicleNumber(vehicle);
+        Assertions.assertTrue(checkValidity);
+    }
 
 }

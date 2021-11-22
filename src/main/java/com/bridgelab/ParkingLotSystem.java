@@ -64,8 +64,16 @@ public class ParkingLotSystem {
             parkingLot1.add(vehicle);
         ParkingLotOwner.parkedTime(vehicle);
         checkCapacity();
+        policeChecks(vehicle);
+    }
+
+    private void policeChecks(Vehicle vehicle) throws ParkingLotException {
         if (vehicle.getColor().equals("white"))
-            Police.getAllWhiteCars(GetPositionByColor(vehicle, "white"));
+            Police.getAllWhiteCars(getPositionByColor(vehicle, "white"));
+        if( vehicle.getColor().equals("blue") && vehicle.getVehicle().equals("Toyota"))
+            Police.getAllToyataBlueCar(vehicle);
+        if( vehicle.getVehicle().equals("BMW"))
+            Police.listOfBMW(findVehicle(vehicle));
     }
 
     /**
@@ -169,7 +177,7 @@ public class ParkingLotSystem {
      * @return spot number
      * @throws ParkingLotException : when o such vehicle found
      */
-    public int GetPositionByColor(Vehicle vehicle, String color) throws ParkingLotException {
+    public int getPositionByColor(Vehicle vehicle, String color) throws ParkingLotException {
         for (Vehicle slot : parkingLot1) {
             if (slot.equals(vehicle) && slot.getColor().equals(color))
                 return parkingLot1.indexOf(slot);
@@ -180,5 +188,6 @@ public class ParkingLotSystem {
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.NO_SUCH_VEHICLE, "No such vehicle found");
     }
+
 
 }
