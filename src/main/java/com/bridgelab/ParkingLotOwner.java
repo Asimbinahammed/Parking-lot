@@ -37,9 +37,8 @@ public class ParkingLotOwner implements ParkingLotObserver {
         parkiedVehicleForLast30min.put(vehicle, parkedVehicle30minBefore.format(formatter));
         Set<Object> setOfKeys = parkingTime.keySet();
         for (Object key : setOfKeys) {
-            if(parkiedVehicleForLast30min.containsKey(key)){
+            if(!parkiedVehicleForLast30min.containsKey(key))
                 vehicleParkedInLast30Min.add(key);
-            }
         }
     }
 

@@ -58,10 +58,22 @@ public class ParkingLotSystem {
         if (parkingLot1.size() == actualCapacity && parkingLot2.size() == actualCapacity) {
             throw new ParkingLotException(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, "Lot is full");
         }
-        if (parkingLot1.size() > parkingLot2.size()) {
-            parkingLot2.add(vehicle);
-        } else
-            parkingLot1.add(vehicle);
+        if(vehicle.isHandicapped() == true)
+        {
+            if (parkingLot1.size() > parkingLot2.size()) {
+                parkingLot2.add(vehicle);
+                if(vehicle.getSize().equals(com.bridgelab.Vehicle.Size.SMALL))
+                    Police.listSmallHandicappedCars(vehicle);
+            } else
+                parkingLot1.add(vehicle);
+        }
+        if(vehicle.isHandicapped() == false)
+        {
+            if (parkingLot1.size() > parkingLot2.size()) {
+                parkingLot2.add(vehicle);
+            } else
+                parkingLot1.add(vehicle);
+        }
         ParkingLotOwner.parkedTime(vehicle);
         checkCapacity();
         policeChecks(vehicle);
@@ -69,7 +81,7 @@ public class ParkingLotSystem {
 
     private void policeChecks(Vehicle vehicle) throws ParkingLotException {
         if (vehicle.getColor().equals("white"))
-            Police.getAllWhiteCars(getPositionByColor(vehicle, "white"));
+            Police.getAllWhiteCars(getPositionByColor("white"));
         if( vehicle.getColor().equals("blue") && vehicle.getVehicle().equals("Toyota"))
             Police.getAllToyataBlueCar(vehicle);
         if( vehicle.getVehicle().equals("BMW"))
@@ -94,7 +106,7 @@ public class ParkingLotSystem {
      * @return boolean : true if vehicle can unpark
      * @throws ParkingLotException : When vehicle is not present
      */
-    public boolean unPark(Object vehicle) throws ParkingLotException {
+    public boolean unPark(Vehicle vehicle) throws ParkingLotException {
         if (parkingLot1 == null || parkingLot2 == null) return false;
         for (Vehicle slot : parkingLot1) {
             if (slot.equals(vehicle)) {
@@ -172,19 +184,18 @@ public class ParkingLotSystem {
     /**
      * purpose : to find spot of vehicle with specific color
      *
-     * @param vehicle : to find spot of vehicle
      * @param color   : mentioning color tobe filtered out
      * @return spot number
      * @throws ParkingLotException : when o such vehicle found
      */
-    public int getPositionByColor(Vehicle vehicle, String color) throws ParkingLotException {
+    public int getPositionByColor(String color) throws ParkingLotException {
         for (Vehicle slot : parkingLot1) {
-            if (slot.equals(vehicle) && slot.getColor().equals(color))
-                return parkingLot1.indexOf(slot);
+            if (slot.getColor().equals(color))
+                return parkingLot1.indexOf(slot) + 1;
         }
         for (Vehicle slot : parkingLot2) {
-            if (slot.equals(vehicle) && slot.getColor().equals(color))
-                return parkingLot2.indexOf(slot);
+            if (slot.getColor().equals(color))
+                return parkingLot2.indexOf(slot) +1;
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.NO_SUCH_VEHICLE, "No such vehicle found");
     }

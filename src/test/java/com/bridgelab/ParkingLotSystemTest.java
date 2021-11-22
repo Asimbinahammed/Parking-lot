@@ -187,8 +187,8 @@ public class ParkingLotSystemTest {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle);
-        int spotNumber = parkingLot.getPositionByColor(vehicle, "white");
-        Assertions.assertEquals(0, spotNumber);
+        int spotNumber = parkingLot.getPositionByColor("white");
+        Assertions.assertEquals(1, spotNumber);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class ParkingLotSystemTest {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle);
-        int spotNumber = parkingLot.getPositionByColor(vehicle, "white");
+        int spotNumber = parkingLot.getPositionByColor("white");
         boolean checkForWhiteCarsSpot = Police.whiteCarsContains(spotNumber);
         Assertions.assertTrue(checkForWhiteCarsSpot);
     }
@@ -221,12 +221,26 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    void givenVehicle_whenParks_shouldValidatedForNumberPLate() throws ParkingLotException {
+    void givenVehicle_whenParks_shouldValidatedForNumberPlate() throws ParkingLotException {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
                 "white");
         parkingLot.park(vehicle);
         boolean checkValidity = Police.validateVehicleNumber(vehicle);
         Assertions.assertTrue(checkValidity);
+    }
+
+    @Test
+    void givenHandicappedVehicleParked_whenChecked_shouldReturnFirstEmptySpot() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle);
+        int spot = parkingLot.findVehicle(vehicle);
+        Assertions.assertEquals(1, spot);
+        Vehicle vehicle2 = new Vehicle("Gavi", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "blackS");
+//        parkingLot.park(vehicle2);
+//        int spot2 = parkingLot.findVehicle(vehicle2);
+//        Assertions.assertEquals(1, spot2);
     }
 
 }

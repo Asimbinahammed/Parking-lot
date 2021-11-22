@@ -22,6 +22,7 @@ public class Police {
     static Map<Integer, List<String>> blueToyota = new HashMap<Integer, List<String>>();
     static ArrayList listOfBMW = new ArrayList();
     static ArrayList toyotaBlue = new ArrayList();
+    static ArrayList listSmallHandicapped = new ArrayList();
 
     /**
      * Purpose : to add parking spot into list
@@ -63,5 +64,9 @@ public class Police {
         Pattern pattern = Pattern.compile("^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{2,4}$");
         Matcher matcher = pattern.matcher(vehicle.getNumberPlate());
         return matcher.matches();
+    }
+
+    public static void listSmallHandicappedCars(Vehicle vehicle) {
+        listSmallHandicapped.add(vehicle);
     }
 }

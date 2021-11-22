@@ -14,6 +14,7 @@ public class Vehicle {
     private final String color;
     private final Size size;
     private final String ownerName;
+    private boolean handicapped;
     public Vehicle vehicles;
 
     public Vehicle(String ownerName, Size size, String vehicle, String numberPlate, String color) {
@@ -22,6 +23,15 @@ public class Vehicle {
         this.vehicle = vehicle;
         this.numberPlate = numberPlate;
         this.color = color;
+    }
+
+    public Vehicle(String ownerName, Size size, String vehicle, String numberPlate, String color, boolean isHandicapped) {
+        this.ownerName = ownerName;
+        this.size = size;
+        this.vehicle = vehicle;
+        this.numberPlate = numberPlate;
+        this.color = color;
+        this.handicapped = isHandicapped;
     }
 
     public Size getSize() {
@@ -42,6 +52,10 @@ public class Vehicle {
 
     public String getColor() {
         return color;
+    }
+
+    public boolean isHandicapped() {
+        return handicapped;
     }
 
     @Override
