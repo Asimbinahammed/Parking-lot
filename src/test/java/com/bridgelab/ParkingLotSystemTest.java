@@ -3,8 +3,6 @@ package com.bridgelab;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -43,6 +41,9 @@ public class ParkingLotSystemTest {
         Vehicle vehicle3 = new Vehicle("Viera", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle3);
+        Vehicle vehicle4 = new Vehicle("Henry", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
+                "white", true);
+        parkingLot.park(vehicle4);
         Vehicle car1 = new Vehicle("John", Vehicle.Size.MEDIUM,"BMW", "KL 10 L 15",
                 "white");
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLot.park(car1));
@@ -54,8 +55,8 @@ public class ParkingLotSystemTest {
                 "white");
         parkingLot.park(vehicle);
         parkingLot.unPark(vehicle);
-        boolean isUnParked = parkingLot.isVehicleUnParked(vehicle);
-        Assertions.assertTrue(isUnParked);
+        boolean isUnParked = parkingLot.isVehicleParked(vehicle);
+        Assertions.assertFalse(isUnParked);
     }
 
 
@@ -103,6 +104,9 @@ public class ParkingLotSystemTest {
         Vehicle vehicle2 = new Vehicle("Alba", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
                 "white");
         parkingLot.park(vehicle2);
+        Vehicle vehicle3 = new Vehicle("Xavi", Vehicle.Size.LARGE,"benz", "KL 10 LM10",
+                "white", true);
+        parkingLot.park(vehicle3);
         boolean isFull = owner.isSlotFull();
         Assertions.assertTrue(isFull);
     }
@@ -132,7 +136,7 @@ public class ParkingLotSystemTest {
                 "white");
         parkingLot.park(car1);
         boolean isFull = security.isSlotFull();
-        Assertions.assertTrue(isFull);
+        Assertions.assertFalse(isFull);
     }
 
     @Test
@@ -146,7 +150,7 @@ public class ParkingLotSystemTest {
         parkingLot.park(vehicle);
         parkingLot.park(car1);
         boolean isFull = owner.isSlotFull();
-        Assertions.assertTrue(isFull);
+        Assertions.assertFalse(isFull);
         parkingLot.unPark(vehicle);
         boolean isStillFull = owner.isSlotFull();
         Assertions.assertFalse(isStillFull);
@@ -236,11 +240,20 @@ public class ParkingLotSystemTest {
         parkingLot.park(vehicle);
         int spot = parkingLot.findVehicle(vehicle);
         Assertions.assertEquals(1, spot);
-        Vehicle vehicle2 = new Vehicle("Gavi", Vehicle.Size.LARGE,"BMW", "KL10LM10",
-                "blackS");
-//        parkingLot.park(vehicle2);
-//        int spot2 = parkingLot.findVehicle(vehicle2);
-//        Assertions.assertEquals(1, spot2);
     }
 
+    @Test
+    void givenHandicappedDriverAndNormal_whenChecked_returnsParkeSpot() throws ParkingLotException {
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle);
+        int spot = parkingLot.findVehicle(vehicle);
+        Assertions.assertEquals(1, spot);
+
+        Vehicle vehicle2 = new Vehicle("Wallence", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle2);
+        int spot2 = parkingLot.findVehicle(vehicle2);
+        Assertions.assertEquals(2, spot2);
+    }
 }

@@ -6,6 +6,5 @@ package com.bridgelab;
  */
 public interface ParkingLotObserver {
     void capacityFull();
-
     void capacityAvailable();
 }
