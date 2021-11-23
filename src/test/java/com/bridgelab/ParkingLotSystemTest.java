@@ -243,17 +243,51 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    void givenHandicappedDriverAndNormal_whenChecked_returnsParkeSpot() throws ParkingLotException {
+    void givenHandicapped_whenChecked_returnsParkeSpot() throws ParkingLotException {
         Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
                 "white", true);
         parkingLot.park(vehicle);
         int spot = parkingLot.findVehicle(vehicle);
         Assertions.assertEquals(1, spot);
-
         Vehicle vehicle2 = new Vehicle("Wallence", Vehicle.Size.LARGE,"BMW", "KL10LM10",
                 "white", true);
         parkingLot.park(vehicle2);
         int spot2 = parkingLot.findVehicle(vehicle2);
         Assertions.assertEquals(2, spot2);
+    }
+
+    @Test
+    void given8HandicappedDrivers_whenCheckedForSmall_returnsParkeSpot() throws ParkingLotException {
+        parkingLot.setCapacity(8);
+        Vehicle vehicle = new Vehicle("David", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle);
+        Vehicle vehicle2 = new Vehicle("Wallence", Vehicle.Size.SMALL,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle2);
+        Vehicle vehicle3 = new Vehicle("Etoo", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle3);
+        Vehicle vehicle4 = new Vehicle("Ibra", Vehicle.Size.SMALL,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle4);
+        Vehicle vehicle5 = new Vehicle("Sergio", Vehicle.Size.LARGE,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle5);
+        Vehicle vehicle6 = new Vehicle("Dani", Vehicle.Size.SMALL,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle6);
+        Vehicle vehicle7 = new Vehicle("Abidal", Vehicle.Size.MEDIUM,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle7);
+        Vehicle vehicle8 = new Vehicle("Valdes", Vehicle.Size.SMALL,"BMW", "KL10LM10",
+                "white", true);
+        parkingLot.park(vehicle8);
+        Police.listSmallHandicappedInRows(2);
+        Police.listSmallHandicappedInRows(4);
+        boolean isListContains1 = Police.IsContainInlistSmallHandicappedInRows(vehicle8);
+        boolean isListContains2 = Police.IsContainInlistSmallHandicappedInRows(vehicle4);
+        Assertions.assertTrue(isListContains1);
+        Assertions.assertTrue(isListContains2);
     }
 }

@@ -15,6 +15,7 @@ public class Police {
     static ArrayList whiteCars = new ArrayList();
     static ArrayList<Integer> listOfBMW = new ArrayList();
     static ArrayList<Vehicle> toyotaBlue = new ArrayList();
+    static ArrayList<Vehicle> listHandicapped = new ArrayList();
     static ArrayList<Vehicle> listSmallHandicapped = new ArrayList();
 
     /**
@@ -28,6 +29,7 @@ public class Police {
 
     /**
      * Purpose : to check vehicle at spot is white or not
+     *
      * @param spotNumber : parked spot number of vehicle
      * @return boolean : true, if list contains that spot.
      */
@@ -37,14 +39,16 @@ public class Police {
 
     /**
      * Purpose : to add parked spot of BMW into list litOfBMW
+     *
      * @param spotNumber : Parked vehicle spot
      */
-    public static void listOfBMW(Integer spotNumber)  {
+    public static void listOfBMW(Integer spotNumber) {
         listOfBMW.add(spotNumber);
     }
 
     /**
      * Purpose : checks a vehicle is BMW or not
+     *
      * @param spotNumber : Parked vehicle spot
      * @return boolean : true, if list contains the spot
      */
@@ -54,6 +58,7 @@ public class Police {
 
     /**
      * Purpose : adding all toyota blue cars into list
+     *
      * @param vehicle : contains all information about vehicle
      */
     public static void getAllToyotaBlueCar(Vehicle vehicle) {
@@ -62,6 +67,7 @@ public class Police {
 
     /**
      * Purpose : check a vehicle is blue toyota or not
+     *
      * @param vehicle : contains all information about vehicle
      * @return boolean : true if list contains the vehicle
      */
@@ -83,18 +89,34 @@ public class Police {
 
     /**
      * Purpose : add into list if given vehicle is small and have handicapped driver
+     *
      * @param vehicle : contains all information about vehicle
      */
-    public static void listSmallHandicappedCars(Vehicle vehicle) {
-        listSmallHandicapped.add(vehicle);
+    public static void listHandicapped(Vehicle vehicle) {
+        listHandicapped.add(vehicle);
     }
 
     /**
-     * Purpose : to check given vehicle is small and driver is handicapped
-     * @param vehicle : contains all information about vehicle
-     * @return boolean : true, if vehicle is small and driver is handicapped
+     * Purpose : to filter out small vehicle in handicapped spot by their row number and add into new list
+     *
+     * @param row: row number
      */
-    public static boolean checkListSmallHandicapped(Vehicle vehicle) {
-       return listSmallHandicapped.contains(vehicle);
+    public static void listSmallHandicappedInRows(int row) {
+        int[] spotNumbers1 = ParkingLotSystem.vehicleInRow(row);
+        for (int spots : spotNumbers1) {
+            if (listHandicapped.get(spots).getSize().equals(Vehicle.Size.SMALL))
+                listSmallHandicapped.add(listHandicapped.get(spots));
+        }
     }
+
+    /**
+     * Purpose : to check a vehicle is present in small vehicle with hanicapped driver at fixed rows
+     *
+     * @param vehicle : contains vehicle details
+     * @return boolean : true if list has this vehicle
+     */
+    public static boolean IsContainInlistSmallHandicappedInRows(Vehicle vehicle) {
+        return listSmallHandicapped.contains(vehicle);
+    }
+
 }

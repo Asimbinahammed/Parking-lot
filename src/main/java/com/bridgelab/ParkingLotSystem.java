@@ -17,6 +17,7 @@ public class ParkingLotSystem {
     public static List<Vehicle> handicappedLot;
     private static int actualCapacity;
     private static List<ParkingLotObserver> observers;
+    private static int rowSize =2;
     private Vehicle Vehicle;
 
     public ParkingLotSystem() {
@@ -63,6 +64,7 @@ public class ParkingLotSystem {
                 throw new ParkingLotException(ParkingLotException.ExceptionType.HANDICAP_PARKING_LOT_IS_FULL,
                         "Handicap parking lot is full");
             handicappedLot.add(vehicle);
+            Police.listHandicapped(vehicle);
         }
         if (!vehicle.isHandicapped()) {
             if (parkingLot1.size() > parkingLot2.size()) {
@@ -218,4 +220,18 @@ public class ParkingLotSystem {
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.NO_SUCH_VEHICLE, "No such vehicle found");
     }
+
+    /**
+     * Purpose : to calculate which spot tobe considered when array are specified.
+     *
+     * @param row1 : row number
+     * @return spots : array consists of parking spots
+     */
+    public static int[] vehicleInRow(int row1) {
+        int spot1 = row1 * rowSize - 2;
+        int spot2 = row1 * rowSize - 1;
+        int[] spots = {spot1, spot2};
+        return (spots);
+    }
+
 }
