@@ -15,21 +15,9 @@ public class Vehicle {
     private final Size size;
     private final String ownerName;
     private boolean handicapped;
-
-
+    
     //Declaring enum
     public enum Size {LARGE, SMALL, MEDIUM}
-
-    /*
-    Defining vehicle class by using owner name, size, model, number plate and color
-     */
-    public Vehicle(String ownerName, Size size, String vehicle, String numberPlate, String color) {
-        this.ownerName = ownerName;
-        this.size = size;
-        this.vehicle = vehicle;
-        this.numberPlate = numberPlate;
-        this.color = color;
-    }
 
     /*
     Defining vehicle class by using owner name, size, model, number plate, color and is Whether driver is handicapped

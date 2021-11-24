@@ -46,7 +46,7 @@ public class ParkingLotSystem {
     }
 
     /**
-     * Purpose : parks vehicle if slot is free
+     * Purpose : parks vehicle if slot is free. Inform police when certain requirements meets while parking.
      *
      * @param vehicle for park
      * @throws ParkingLotException : When parking lot is full or when vehicle is not present.
